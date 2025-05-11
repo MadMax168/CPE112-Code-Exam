@@ -20,12 +20,12 @@ public class Main {
         System.out.println(algo.inorder(t)); //Tree answer
 
         /* problem 2 Magic Powder */
-        int n = sc.nextInt();
+        int n = sc.nextInt() + 1;
         int e = sc.nextInt();
         sc.nextLine();
         GraphL chemL = new GraphL(false, n, e);
 
-        List<Pair<Integer, Integer>> doublebonds = new ArrayList<>();
+        int dest = -1;
         for (int i = 0; i < e; i++){
             int u = sc.nextInt();
             char bond = sc.next().charAt(0);
@@ -34,28 +34,23 @@ public class Main {
 
             chemL.addEdge(u, v, 1);
 
-            if (bond == '=') doublebonds.add(new Pair<>(u, v));
+            if (bond == '=') dest = v;
         }
 
-        int min = Integer.MAX_VALUE;
-        for (int j = 1; j <= n; j++){
-            if (chemL.adjacencyList.get(j).size() != 1) continue;
-
-            List<Integer> dist = algo.bfs(chemL, j);
-            for (Pair<Integer, Integer> bond : doublebonds){
-                int u = bond.first;
-                dist.add(u);
-                int v = bond.second;
-                dist.add(v);
-
-                int diff = Math.min(dist.get(u), dist.get(v));
-
-                if (diff < min) {
-                    min = diff;
-                }
+        List<Integer> leaf = new ArrayList<>();
+        for (int i = 0; i < chemL.numVertices; i++){
+            if (chemL.adjacencyList.containsKey(i) && chemL.adjacencyList.get(i).size() == 1) {
+                leaf.add(i);
             }
         }
 
+        int min = Integer.MAX_VALUE;
+        for(int j = 0; j < leaf.size(); j++){
+            int dist = algo.dijkstra(chemL, leaf.get(j), dest) + 1;
+            
+            if (dist < min) min = dist;
+        }
+        
         System.out.println(min);
 
         /* problem 3 Cokrabue */
@@ -122,5 +117,7 @@ public class Main {
 
             System.out.println(totalTime);
         }
+        
+        sc.close();
     }
 }
