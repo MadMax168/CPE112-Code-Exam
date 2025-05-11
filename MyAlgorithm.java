@@ -88,29 +88,31 @@ public class MyAlgorithm extends Algorithm{
     public int floyd(GraphM graph, int startNode, int destNode){
         int[][] dist = new int[graph.size()][graph.size()];
 
+        //insert distance data into dist[][] and setup
         for (int i = 0; i < graph.size(); i++){
             for (int j = 0; j < graph.size(); j++){
                 if (i == j) {
-                    dist[i][j] = 0;
+                    dist[i][j] = 0; //if from node A to A set it to 0
                 } else if (graph.matrix[i][j] != 0){
                     dist[i][j] = graph.matrix[i][j];
                 } else {
-                    dist[i][j] = Integer.MAX_VALUE;
+                    dist[i][j] = Integer.MAX_VALUE; //if no Path set INF
                 }
             }
         }
 
+        //floyd utility
         for (int k = 0; k < graph.size(); k++) {
             for (int i = 0; i < graph.size(); i++) {
                 for (int j = 0; j < graph.size(); j++) {
                     if (dist[i][k] != Integer.MAX_VALUE && dist[k][j] != Integer.MAX_VALUE && dist[i][j] > dist[i][k] + dist[k][j]){
                         dist[i][j] = dist[i][k] + dist[k][j];
-                    }
+                    } // filter just only has path and must be less than start to dest
                 }
             }
         }
 
-        return dist[startNode][destNode] == Integer.MAX_VALUE ? 0 : dist[startNode][destNode];
+        return dist[startNode][destNode] == Integer.MAX_VALUE ? 0 : dist[startNode][destNode]; //Chat said it be better if found no Path
     }
 
     public boolean warshall(GraphM graph, int startNode, int destNode){
