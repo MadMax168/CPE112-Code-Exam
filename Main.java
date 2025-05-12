@@ -86,38 +86,23 @@ public class Main {
         }
 
         /* problem 4 Network Engineer */
-        int nLNode = sc.nextInt();
-        int nLEdge = sc.nextInt();
+        int nN = sc.nextInt();
+        int nE = sc.nextInt();
         sc.nextLine();
-        GraphL gL = new GraphL(false, nLNode, nLEdge);
+        GraphL gNet = new GraphL(false, nN, nE);
 
-        for (int i = 0; i < nLEdge; i++){
+        for (int i = 0; i < nE; i++){
             int src = sc.nextInt();
             int des = sc.nextInt();
             int time = sc.nextInt();
             sc.nextLine();
 
-            gL.addEdge(src, des, time);
+            gNet.addEdge(src, des, time);
         }
 
-        int Q = sc.nextInt(); sc.nextLine();
-        for (int j = 0; j < Q; j++){
-            int router = sc.nextInt(); sc.nextLine();
-            int totalTime = 0;
-
-            for (int k = 0; k < nLNode; k++){
-                if (k == router) continue;
-
-                int time = algo.dijkstra(gL, router, k);
-
-                if (time != Integer.MAX_VALUE){
-                    if (totalTime < time) totalTime = time;
-                }
-            }
-
-            System.out.println(totalTime);
-        }
+        int qNet = sc.nextInt(); sc.nextLine();
         
+
         sc.close();
     }
 }

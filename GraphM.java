@@ -7,6 +7,7 @@ public class GraphM extends AdjM{
     public GraphM(int n, boolean isDirected){
         super(n);
         this.isDirected = isDirected;
+        this.numVertices = n;
     }
 
     public void addEdge(int i, int j, int weight){
